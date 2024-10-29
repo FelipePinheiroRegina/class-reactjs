@@ -1,0 +1,112 @@
+.main {
+    width: 100%;
+
+}
+
+
+/* CONFIGURAÇÕES DO INPUT E BUTTON */
+.form {
+    margin-top: -27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .8rem;
+}
+
+.task {
+   width: 63.8rem; 
+   padding: 1.6rem;
+   background-color: var(--gray-500);
+   border-radius: .8rem;
+   border: none;
+}
+
+.task::placeholder {
+    color: var(--gray-300);
+}
+
+.create {
+    padding: 1.6rem;
+    border: none;
+    
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+
+    background-color: var(--blue-600);
+    border-radius: .8rem;
+    cursor: pointer;
+
+    transition: background-color .2s;
+}
+
+.create:hover:not(:disabled) {
+    background-color: var(--blue-300);
+}
+
+.create:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.create > span {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.create > svg {
+    font-size: 2rem;
+}
+
+/* CONFIGURAÇÕES DA LISTA DE TAREFAS */
+
+.list {
+    width: 73.6rem;
+    
+    margin: 0 auto;
+    margin-top: 6.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+}
+
+.list > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list > header > span {
+     display: flex;
+     flex-direction: row;
+     gap: .8rem;
+}
+
+.countCreate > strong {
+    font-size: 1.4rem;
+    color: var(--blue-300);
+}
+
+.countConclude > strong {
+    font-size: 1.4rem;
+    color: var(--purple-300);
+}
+
+.countNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    background-color: var(--gray-400);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: .2rem 1.2rem;
+}
+
+.article {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}

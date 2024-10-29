@@ -1,0 +1,17 @@
+.wrapper {
+    max-width: 112rem;
+    margin-inline: auto;
+
+    padding: 3.2rem 1.6rem;
+
+    display: grid;
+    grid-template-columns: 256px 1fr;
+    gap: 3.2rem;
+    align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+}

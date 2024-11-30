@@ -1,4 +1,5 @@
-# Hello World :world_map
+<h1 align='center'>Hello World 🗺️</h1>
+
 ## this course about react JS and your ecosystem.
 
 ### last update 11-30-2024 (month-day-year)

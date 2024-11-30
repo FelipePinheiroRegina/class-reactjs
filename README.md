@@ -7,6 +7,9 @@
 what i've learned so far: using hooks as useState, useEffect, useMemo, useReducer, Context API, customs hooks, useForm, validation as zod with forms of the react-hook-forms, things like immutability of the react, things like inputs controlled e uncontrolled and most.
 
 # Coffee Delivery
+
+### [repository](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/coffee-delivery)
+
 ![image 1](./assets/coffee1.png)
 <hr>
 
@@ -21,6 +24,9 @@ what i've learned so far: using hooks as useState, useEffect, useMemo, useReduce
 
 
 # Timer Pomodoro
+
+### [repository](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/timer-ts)
+
 ![image 1](./assets/timer1.png)
 <hr>
 
@@ -31,6 +37,9 @@ what i've learned so far: using hooks as useState, useEffect, useMemo, useReduce
 <hr>
 
 # To do
+
+### [repository](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/01-react-practice/src)
+
 ![image 1](./assets/todo-1.png)
 <hr>
 
@@ -38,6 +47,8 @@ what i've learned so far: using hooks as useState, useEffect, useMemo, useReduce
 <hr>
 
 # Social Media
+
+### [repository](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/01-react-ts)
 
 ![image 1](./assets/social-media.png)
 <hr>

@@ -1,0 +1,60 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Site development",
+      "type": "income",
+      "category": "Sale",
+      "price": 1400,
+      "createdAt": "2024-12-05T23:30:28.821Z"
+    },
+    {
+      "id": 2,
+      "description": "Hamburger",
+      "type": "outcome",
+      "category": "Food",
+      "price": 60,
+      "createdAt": "2024-12-05T23:30:28.821Z"
+    },
+    {
+      "id": 3,
+      "description": "Fruits",
+      "type": "income",
+      "category": "Food",
+      "price": 10,
+      "createdAt": "2024-12-05T23:30:28.821Z"
+    },
+    {
+      "description": "Whey Protein",
+      "category": "Sumplements",
+      "price": 100,
+      "type": "outcome",
+      "createdAt": "2024-12-08T19:24:04.989Z",
+      "id": 4
+    },
+    {
+      "description": "Excel Business",
+      "category": "Work",
+      "price": 1500,
+      "type": "outcome",
+      "createdAt": "2024-12-08T19:26:30.219Z",
+      "id": 5
+    },
+    {
+      "description": "Emprestimos",
+      "category": "Work",
+      "price": 2000,
+      "type": "income",
+      "createdAt": "2024-12-08T19:29:39.379Z",
+      "id": 6
+    },
+    {
+      "description": "Market",
+      "category": "Food",
+      "price": 150,
+      "type": "outcome",
+      "createdAt": "2024-12-08T19:58:10.945Z",
+      "id": 7
+    }
+  ]
+}

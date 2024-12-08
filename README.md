@@ -2,9 +2,35 @@
 
 ## this course about react JS and your ecosystem.
 
-### last update 11-30-2024 (month-day-year)
+### last update 12-08-2024 (month-day-year)
 
-what i've learned so far: using hooks as useState, useEffect, useMemo, useReducer, Context API, customs hooks, useForm, validation as zod with forms of the react-hook-forms, things like immutability of the react, things like inputs controlled e uncontrolled and most.
+what i've learned so far: 
+
+Hooks: useState, useEffect, useReducer
+
+Forms: useForm, validation with zod, inputs(uncontrolled, controlled)
+
+Performance: memo, useMemo, useCallback, Context Selector, React Developer Tools
+
+Context Global: Context API, Redux, Redux Toolkit
+
+Data Management: React Query for caching and synchronizing remote states
+
+### [about performance on React](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/dt-money/README.md)
+
+# DTMoney
+
+### [repository](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/dt-money)
+
+![image 1](./assets/dtmoney.png)
+<hr>
+
+![image 2](./assets/dtmoney2.png)
+<hr>
+
+![image 3](./assets/dtmoney3.png)
+<hr>
+
 
 # Coffee Delivery
 

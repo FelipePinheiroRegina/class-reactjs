@@ -2,7 +2,7 @@
 
 ## this course about react JS and your ecosystem.
 
-### last update 12-08-2024 (month-day-year)
+### last update 12-15-2024 (month-day-year)
 
 what i've learned so far: 
 
@@ -17,6 +17,19 @@ Context Global: Context API, Redux, Redux Toolkit
 Data Management: React Query for caching and synchronizing remote states
 
 ### [about performance on React](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/dt-money/README.md)
+
+# Github Blog
+
+### [repository](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/github-blog)
+
+![image 1](./assets/github1.png)
+<hr>
+
+![image 2](./assets/github2.png)
+<hr>
+
+![image 3](./assets/github3.png)
+<hr>
 
 # DTMoney
 

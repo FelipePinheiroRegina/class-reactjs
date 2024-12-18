@@ -4,9 +4,13 @@ import { Toaster } from 'sonner'
 import { AppOutlet } from '@/pages/_outlets/AppOutlet'
 import { AuthOutlet } from '@/pages/_outlets/AuthOutlet'
 
-import { Dashboard } from '@/pages/App/Dashboard'
-import { SignIn } from '@/pages/Auth/SignIn'
-import { SignUp } from '@/pages/Auth/SignUp'
+import { Dashboard } from '@/pages/app/dashboard/Dashboard'
+import { Orders } from '@/pages/app/orders/Orders'
+
+import { SignIn } from '@/pages/auth/SignIn'
+import { SignUp } from '@/pages/auth/SignUp'
+import { ThemeProvider } from '@/components/theme/theme-provider'
+import { NotFound } from '@/pages/404'
 
 const router = createBrowserRouter([
   /*
@@ -22,8 +26,10 @@ const router = createBrowserRouter([
   {
     path: '/', // Exclusivo para a aplicação
     element: <AppOutlet />,
+    errorElement: <NotFound/>,
     children: [
       { path: '/', element: <Dashboard /> },
+      { path: '/orders', element: <Orders /> },
     ],
   },
 ])
@@ -31,10 +37,12 @@ const router = createBrowserRouter([
 export function Router() {
   return (
     <HelmetProvider>
-      <Helmet titleTemplate="%s | pizza.shop" />{' '}
-      {/*%s = é uma variavel que muda de acordo como title que você passa nas pages*/}
-      <Toaster richColors/>
-      <RouterProvider router={router} />
+      <ThemeProvider storageKey='pizzashop-theme' defaultTheme='dark'>
+        <Helmet titleTemplate="%s | pizza.shop" />{' '}
+        {/*%s = é uma variavel que muda de acordo como title que você passa nas pages*/}
+        <Toaster richColors/>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </HelmetProvider>
   )
 }

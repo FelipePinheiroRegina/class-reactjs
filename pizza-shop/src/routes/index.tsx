@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { Toaster } from 'sonner'
 import { AppOutlet } from '@/pages/_outlets/AppOutlet'
+
 import { AuthOutlet } from '@/pages/_outlets/AuthOutlet'
 
 import { Dashboard } from '@/pages/app/dashboard/Dashboard'
@@ -13,16 +14,6 @@ import { ThemeProvider } from '@/components/theme/theme-provider'
 import { NotFound } from '@/pages/404'
 
 const router = createBrowserRouter([
-  /*
-  {
-    path: '/',
-    element: <AuthOutlet />, // Exclusivo para autenticação
-    children: [
-      { path: '/', element: <SignIn /> },
-      { path: '/signup', element: <SignUp /> },
-    ],
-  },
-  */
   {
     path: '/', // Exclusivo para a aplicação
     element: <AppOutlet />,
@@ -30,6 +21,15 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Dashboard /> },
       { path: '/orders', element: <Orders /> },
+    ],
+  },
+
+  {
+    path: '/',
+    element: <AuthOutlet />, // Exclusivo para autenticação
+    children: [
+      { path: '/', element: <SignIn /> },
+      { path: '/signup', element: <SignUp /> },
     ],
   },
 ])

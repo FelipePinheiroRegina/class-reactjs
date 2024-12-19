@@ -8,7 +8,7 @@ import './index.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Router />
+      <Router/>
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 )

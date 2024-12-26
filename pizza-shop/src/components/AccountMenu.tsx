@@ -6,12 +6,15 @@ import { Skeleton } from './ui/skeleton'
 import { Dialog, DialogTrigger } from './ui/dialog'
 import { StoreProfileDialog } from './StoreProfileDialog'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { getProfile } from '@/api/getProfile'
 import { getMangedRestaurant } from '@/api/getManagedRestaurant'
+import { useNavigate } from 'react-router-dom'
+import { signOut } from '@/api/signout'
 
 
 export function AccountMenu() {
+    const navigate = useNavigate()
     const { data: profile, isLoading: isLoadingProfile } = useQuery({
         queryKey: ['profile'],
         queryFn: getProfile,
@@ -22,6 +25,13 @@ export function AccountMenu() {
         queryKey: ['managedRestaurant'],
         queryFn: getMangedRestaurant,
         staleTime: Infinity
+    })
+
+    const { mutateAsync: signOutFn, isPending: isSignOutPending } = useMutation({
+        mutationFn: signOut,
+        onSuccess: () => {
+            navigate('/signin', { replace: true })
+        }
     })
 
     return (
@@ -58,9 +68,14 @@ export function AccountMenu() {
                             <span>Store profile</span>
                         </DropdownMenuItem>
                     </DialogTrigger>
-                    <DropdownMenuItem className='text-rose-500 dark:text-rose-400'>
-                        <LogOut className='mr-2 w-4 h-4'/>
-                        <span>Logout</span>
+                    <DropdownMenuItem className='text-rose-500 dark:text-rose-400' 
+                        asChild 
+                        disabled={isSignOutPending}
+                    >
+                        <button className='w-full' onClick={() => signOutFn()}>
+                            <LogOut className='mr-2 w-4 h-4'/>
+                            <span>Logout</span>
+                        </button>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

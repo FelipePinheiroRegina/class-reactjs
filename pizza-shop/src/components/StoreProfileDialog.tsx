@@ -10,10 +10,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { updateProfile } from '@/api/updateProfile'
 import { toast } from 'sonner'
+import { queryClient } from '@/lib/react-query'
+import { GetMangedRestaurantBody } from '../api/getManagedRestaurant'
 
 const storeProfileSchema = z.object({
     name: z.string().min(1),
-    description: z.string()
+    description: z.string().nullable()
 })
 
 type StoreProfileSchema = z.infer<typeof storeProfileSchema>
@@ -33,8 +35,33 @@ export function StoreProfileDialog() {
         }
     })
 
+    function updateMangedRestaurantCache({ name, description }: StoreProfileSchema) {
+        const cached = queryClient.getQueryData<GetMangedRestaurantBody>(['managedRestaurant'])
+
+        if(cached) {
+            queryClient.setQueryData(['managedRestaurant'], {
+                ...cached,
+                name,
+                description
+            })
+        }
+
+        return { cached }
+    }
+
     const { mutateAsync: updateProfileFn } = useMutation({
         mutationFn: updateProfile,
+        onMutate({ name, description }) {
+            const { cached } = updateMangedRestaurantCache({ name, description })
+
+            return { previousCachedProfile: cached }
+        },
+
+        onError(_, __, context) {
+            if(context?.previousCachedProfile) {
+                updateMangedRestaurantCache(context.previousCachedProfile)
+            }
+        }
     })
 
     async function handleUpdateProfile(data: StoreProfileSchema) {

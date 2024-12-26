@@ -42,7 +42,7 @@ export function SignUp() {
       toast.success('Restaurant successfully registered!', {
         action: {
           label: 'Login',
-          onClick: () => navigate(`/?email=${data.email}`)
+          onClick: () => navigate(`/signin?email=${data.email}`)
         }
       })
 
@@ -56,7 +56,7 @@ export function SignUp() {
       <Helmet title="Register"/>
       <div className='p-8'>
         <Button variant='ghost' asChild className='absolute right-8 top-8'>
-          <Link to='/' className=''>
+          <Link to='/signin' className=''>
               Login
           </Link>
         </Button>

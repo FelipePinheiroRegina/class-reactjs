@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <AuthOutlet />, // Exclusivo para autenticação
     children: [
-      { path: '/', element: <SignIn /> },
+      { path: '/signin', element: <SignIn /> },
       { path: '/signup', element: <SignUp /> },
     ],
   },

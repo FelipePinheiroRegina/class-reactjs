@@ -16,7 +16,7 @@ export function AppOutlet() {
           const code = error.response?.data.code
 
           if(status === 401 && code === 'UNAUTHORIZED') {
-            navigate('signin', { replace: true })
+            navigate('/signin', { replace: true })
           }
         }
       }

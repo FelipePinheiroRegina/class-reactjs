@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { TotalRevenueMonth } from './components/TotalRevenueMonth'
 import { AmountOrdersPerMonth } from './components/AmountOrdersPerMonth'
 import { AmountOrdersPerDay } from './components/AmountOrdersPerDay'
-import { AmountOrdersCancelledPerMonth } from './components/AmountOrdersCancelledPerMonth'
+import { AmountOrdersCancelledPerMonth } from './components/AmountOrdersCanceledPerMonth'
 import { RevenueChart } from './components/RevenueChart'
 import { PopularProductsChart } from './components/PopularProductsChart'
 

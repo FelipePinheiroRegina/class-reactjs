@@ -2,6 +2,7 @@ import { getMonthCancelOrdersAmount } from '@/api/getMonthCancelOrdersAmount'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useQuery } from '@tanstack/react-query'
 import { TicketMinus } from 'lucide-react'
+import { LoadingCardSkeleton } from './LoadingCardSkeleton'
 
 export function AmountOrdersCancelledPerMonth() {
 
@@ -20,7 +21,7 @@ export function AmountOrdersCancelledPerMonth() {
             <TicketMinus className='h-4 w-4 text-muted-foreground'/>
             </CardHeader>
             <CardContent className='space-y-1'>
-                { ordersCanceledMonth && (
+                { ordersCanceledMonth ? (
                     <>
                         <span className='text-2xl font-bold tracking-tight'>
                             {ordersCanceledMonth.amount.toLocaleString('pt-BR')}
@@ -37,6 +38,8 @@ export function AmountOrdersCancelledPerMonth() {
                             }
                         </p> 
                     </>
+                ) : (
+                    <LoadingCardSkeleton/>
                 )}
             </CardContent>
         </Card>

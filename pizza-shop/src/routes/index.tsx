@@ -12,12 +12,13 @@ import { SignIn } from '@/pages/auth/SignIn'
 import { SignUp } from '@/pages/auth/SignUp'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { NotFound } from '@/pages/404'
+import { Error } from '@/pages/Error'
 
 const router = createBrowserRouter([
   {
     path: '/', // Exclusivo para a aplicação
     element: <AppOutlet />,
-    errorElement: <NotFound/>,
+    errorElement: <Error/>,
     children: [
       { path: '/', element: <Dashboard /> },
       { path: '/orders', element: <Orders /> },
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       { path: '/signup', element: <SignUp /> },
     ],
   },
+  {
+    path: '*',
+    element: <NotFound/>,
+  }
 ])
 
 export function Router() {

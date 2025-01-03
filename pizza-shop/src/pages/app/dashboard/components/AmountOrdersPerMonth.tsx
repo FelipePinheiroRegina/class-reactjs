@@ -2,6 +2,7 @@ import { getMonthOrdersAmount } from '@/api/getMonthOrdersAmount'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useQuery } from '@tanstack/react-query'
 import { UtensilsCrossed } from 'lucide-react'
+import { LoadingCardSkeleton } from './LoadingCardSkeleton'
 
 export function AmountOrdersPerMonth() {
 
@@ -9,7 +10,7 @@ export function AmountOrdersPerMonth() {
         queryFn: getMonthOrdersAmount,
         queryKey: ['metrics', 'monthOrdersAmount']
     })
-
+    
     return (
         <Card>
             <CardHeader className='flex-row items-center justify-between space-y-0 pb-2'>
@@ -20,7 +21,7 @@ export function AmountOrdersPerMonth() {
             <UtensilsCrossed  className='h-4 w-4 text-muted-foreground'/>
             </CardHeader>
             <CardContent className='space-y-1'>
-                { monthOrdersAmount && (
+                { monthOrdersAmount ? (
                     <>
                         <span className='text-2xl font-bold tracking-tight'>
                             {monthOrdersAmount.amount.toLocaleString('pt-BR')}
@@ -37,6 +38,8 @@ export function AmountOrdersPerMonth() {
                             }
                         </p> 
                     </>
+                ) : (
+                    <LoadingCardSkeleton/>
                 )}
             </CardContent>
         </Card>

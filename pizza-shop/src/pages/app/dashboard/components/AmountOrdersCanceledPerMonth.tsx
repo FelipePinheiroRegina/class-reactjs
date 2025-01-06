@@ -27,9 +27,9 @@ export function AmountOrdersCancelledPerMonth() {
                             {ordersCanceledMonth.amount.toLocaleString('pt-BR')}
                         </span>
                         <p className='text-xs text-muted-foreground'>
-                            { ordersCanceledMonth.diffFromLastMonth >= 0 ? (
+                            { ordersCanceledMonth.diffFromLastMonth < 0 ? (
                                 <>
-                                    <span className='text-emerald-500 dark:text-emerald-400'>-{ordersCanceledMonth.diffFromLastMonth}%</span> compared to last month
+                                    <span className='text-emerald-500 dark:text-emerald-400'>{ordersCanceledMonth.diffFromLastMonth}%</span> compared to last month
                                 </>
                             ) : 
                                 <>

@@ -5,7 +5,7 @@ export interface GetDailyRevenueInPeriodQuery {
   to?: Date
 }
 export interface GetDailyRevenueInPeriodResponse {
-    date: number,
+    date: string,
     receipt: number
 }
 

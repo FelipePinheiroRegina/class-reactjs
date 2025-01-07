@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form'
 import { updateProfile } from '@/api/updateProfile'
 import { toast } from 'sonner'
 import { queryClient } from '@/lib/react-query'
-import { GetMangedRestaurantBody } from '../api/getManagedRestaurant'
+import { GetMangedRestaurantResponse } from '../api/getManagedRestaurant'
 
 const storeProfileSchema = z.object({
     name: z.string().min(1),
@@ -36,7 +36,7 @@ export function StoreProfileDialog() {
     })
 
     function updateMangedRestaurantCache({ name, description }: StoreProfileSchema) {
-        const cached = queryClient.getQueryData<GetMangedRestaurantBody>(['managedRestaurant'])
+        const cached = queryClient.getQueryData<GetMangedRestaurantResponse>(['managedRestaurant'])
 
         if(cached) {
             queryClient.setQueryData(['managedRestaurant'], {

@@ -24,7 +24,7 @@ const orders: Orders = Array.from({ length: 60 }).map((_, index) => {
 })
 
 export const getOrdersMock = http.get<never, never, GetOrdersResponse>(
-    '/orders',
+    'orders',
     async ({ request }) => {
         const { searchParams } = new URL(request.url)
 
@@ -35,7 +35,7 @@ export const getOrdersMock = http.get<never, never, GetOrdersResponse>(
         const customerName = searchParams.get('customerName')
         const orderId = searchParams.get('orderId')
         const status = searchParams.get('status')
-
+    
         let filteredOrders = orders
 
         if(customerName) {
@@ -46,7 +46,7 @@ export const getOrdersMock = http.get<never, never, GetOrdersResponse>(
 
         if(orderId) {
             filteredOrders = filteredOrders.filter((order) => 
-                order.customerName.includes(orderId)
+                order.orderId.includes(orderId)
             )
         }
 

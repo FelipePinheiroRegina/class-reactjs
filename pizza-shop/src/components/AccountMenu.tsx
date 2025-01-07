@@ -12,7 +12,6 @@ import { getMangedRestaurant } from '@/api/getManagedRestaurant'
 import { useNavigate } from 'react-router-dom'
 import { signOut } from '@/api/signout'
 
-
 export function AccountMenu() {
     const navigate = useNavigate()
     const { data: profile, isLoading: isLoadingProfile } = useQuery({

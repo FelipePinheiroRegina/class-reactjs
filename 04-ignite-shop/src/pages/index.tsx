@@ -7,13 +7,22 @@ import 'keen-slider/keen-slider.min.css'
 import shirt1 from '@/assets/shirts/shirt1.png'
 import shirt2 from '@/assets/shirts/shirt2.png'
 import shirt3 from '@/assets/shirts/shirt3.png'
+import { useEffect, useState } from "react"
 
 export default function Home() {
+  const [list, setList] = useState<number[]>([])
   const [sliderRef] = useKeenSlider({
     slides: {
-      perView: 3
+      perView: 3,
+      spacing: 48
     }
   })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setList([1, 2, 3, 4])
+    }, 2000)
+  }, [])
 
   return (
     <HomeContainer ref={sliderRef} className="keen-slider">

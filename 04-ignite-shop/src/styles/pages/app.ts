@@ -11,6 +11,18 @@ export const Container = styled('div', {
 export const Header = styled('header', {
     padding: '2rem 0',
     width: '100%',
-    maxWidth: 1100,
+    maxWidth: 1180,
     margin: '0 auto',
+    display: 'flex',
+    gap: '1rem',
+   
+    div: {
+        h1: {
+            fontSize: '$2xl',
+        },
+
+        p: {
+            fontSize: '$sm',
+        }
+    }
 })

@@ -1,29 +1,51 @@
-# 1
-O Next.js é uma estrutura construída sobre o Node.js, funcionando como um backend em Node que oferece suporte a várias estratégias de renderização, como SSR (Server-Side Rendering) e SSG (Static Site Generation). Ele atua como uma camada intermediária que monta todo o HTML do aplicativo no servidor e o devolve para o frontend, pronto para ser exibido ao usuário.
+# O que é o next? qual é o propósito para o qual ele foi criado?
+O Next.js é um framework de desenvolvimento web construído com base no Node.js e na biblioteca React. 
 
-No caso do SSR, o Next.js:
+Ele foi criado para superar as limitações das Single Page Applications (SPAs) tradicionais, como tempos iniciais de carregamento longos e dificuldades com SEO (Search Engine Optimization).
 
-Recebe a requisição do usuário.
-Executa o código necessário (como buscar dados no backend).
-Renderiza o HTML da página no servidor.
-Envia esse HTML pronto ao navegador, reduzindo o tempo de carregamento inicial e melhorando o SEO.
+Seu principal propósito é atuar como uma camada intermediária, que processa e monta todo o HTML no servidor antes de enviá-lo ao navegador (SSR). Isso permite que o conteúdo seja exibido rapidamente ao usuário e seja amigável para mecanismos de busca (SEO).
 
-# 2
-Static Site Generation (SSG) no Next.js é uma estratégia de renderização em que o HTML de uma página é gerado durante o processo de build da aplicação. Esse HTML é então servido como um arquivo estático para os usuários, eliminando a necessidade de processar requisições ao backend para cada visita à página.
 
-Por exemplo, suponha que nosso site receba 1 milhão de acessos em meia hora. Com SSG, o HTML da página é gerado uma única vez no momento do build ou na primeira requisição (caso você utilize ISR - Incremental Static Regeneration). Esse HTML gerado é armazenado em cache.
+# (SSR) Server Side Rendering
+```javascript
+export const getServerSideProps: GetServerSideProps = async () => {
+  const response = await stripe.products.list({
+    expand: ['data.default_price']
+  })
 
-Assim:
+  const products = response.data.map(product => {
+    const price = product.default_price as Stripe.Price
 
-Quando o primeiro usuário acessar a aplicação, será feita uma única requisição ao backend para buscar os dados necessários e gerar o HTML estático.
-Nos acessos subsequentes (os outros 999.999 usuários), o HTML já estará em cache, e os usuários serão atendidos diretamente com essa versão estática, sem disparar novas requisições ao backend.
+    return {
+      id: product.id,
+      name:product.name,
+      imageUrl: product.images[0],
+      price: price.unit_amount
+    }
+  })
+
+  return {
+    props: {
+      products,
+    }
+  }
+}
+```
+
+# O que é (SSG) Static Site Generation ? 
+- SSG é uma estratégia de renderização em que o HTML de uma página é gerado durante o processo de build da aplicação. Esse HTML é então servido como um arquivo estático para os usuários, eliminando a necessidade de processar requisições ao backend para cada visita à página.
+
+Por exemplo, suponha que nosso site receba 1 milhão de acessos em meia hora. Com SSG, o HTML da página é gerado uma única vez no momento do build e remontada a cada 10 minutos, se assim você estabelecer.
+
+Então, quando os 1 milhão de usuários acessar a página, o HTML já estará em cache, e os usuários serão atendidos diretamente com essa versão estática, sem disparar novas requisições ao backend.
 Isso torna o processo muito mais performático, pois evita o processamento repetitivo no backend e reduz drasticamente a carga nos servidores. Como o conteúdo não muda durante o período configurado, todos os usuários recebem a mesma versão do HTML.
 
 
-# sobre turbopack
-Turbopack é um novo bundler (empacotador) de JavaScript e CSS criado pelo Next.js, desenvolvido como uma alternativa ao Webpack. Ele foi projetado para ser mais rápido, escalável e eficiente, aproveitando a capacidade do Rust (um linguagem de programação de baixo nível) para otimizar o desempenho de construção e desenvolvimento no Next.js.
+# Como o next lida com imagens?
+Em muitos aplicativos tradicionais, é comum ver componentes renderizando imagens com 1000 pixels, mesmo que na tela sejam exibidos apenas 300 pixels. Ou seja, por que importar uma imagem de 1000 pixels para usá-la em um tamanho de 300 pixels? O Next.js otimiza isso automaticamente: se você vai usar uma imagem em 300 pixels, o Next.js converte essa imagem de 1000 pixels para 300 pixels em background, otimizando o carregamento.
 
-O Turbopack foi anunciado na Next.js Conf 2022 e está sendo projetado para oferecer uma experiência de desenvolvimento mais rápida, especialmente em grandes projetos com muitos módulos. Ele é uma parte fundamental da evolução do Next.js, e a equipe da Vercel (criadora do Next.js) tem como objetivo substituir o Webpack por ele em versões futuras.
+# O que é o turbopack do next?
+Turbopack é um novo bundler (empacotador) de JavaScript e CSS criado pelo Next.js, desenvolvido como uma alternativa ao Webpack. Ele foi projetado para ser mais rápido, escalável e eficiente, aproveitando a capacidade do Rust (um linguagem de programação de baixo nível) para otimizar o desempenho de construção e desenvolvimento no Next.js.
 
 Principais Características do Turbopack
 Velocidade:
@@ -37,11 +59,34 @@ Ele é projetado para ser extremamente eficiente, especialmente em projetos gran
 Compatibilidade com o Webpack:
 
 O Turbopack não foi feito para substituir completamente o Webpack, mas para coexistir com ele. A ideia é que os desenvolvedores possam usar o Turbopack para melhorar a experiência de desenvolvimento, mas o Webpack ainda pode ser usado para compilar o código final para produção (embora no futuro o Turbopack deva ser capaz de também substituir o Webpack para builds de produção).
-Suporte a Recursos do Next.js:
-
-O Turbopack foi criado especificamente para o Next.js, o que significa que ele é profundamente integrado a várias funcionalidades do framework, como otimização de imagens, roteamento, CSS, e muito mais.
 
 
 
-# sobre image no next
-Em muitos aplicativos React tradicionais, é comum ver componentes renderizando imagens com 1000 pixels, mesmo que na tela sejam exibidos apenas 300 pixels. Ou seja, por que importar uma imagem de 1000px para usá-la em um tamanho de 300px? O Next.js otimiza isso automaticamente: se você vai usar uma imagem em 300px, o Next.js converte essa imagem de 1000px para 300px em background, otimizando o carregamento.
+
+A função é executada no lado do servidor, antes que o conteúdo seja enviado ao cliente. O navegador apenas renderiza o conteúdo depois que o servidor processa e retorna a estrutura com os dados prontos para o cliente.
+
+quando utilizar?
+- Você deve usar getServerSideProps somente quando for essencial que os dados estejam disponíveis e renderizados na tela antes que o navegador carregue o conteúdo. Isso é particularmente útil quando:
+
+- SEO (Search Engine Optimization): Para melhorar a indexação por bots, crawlers e buscadores (como Google, Bing, Yahoo), garantindo que o conteúdo dinâmico seja visível para eles no momento da requisição.
+- Dados Sensíveis ou Dinâmicos: Quando os dados variam frequentemente e precisam estar atualizados em cada requisição, como informações de um painel administrativo ou uma página de notícias.
+
+
+# Navegação no Next
+```javascript
+import Link from "next/link"
+
+<Link href={`/product/${product.id}`} key={product.id}>
+    <Product className="keen-slider__slide" >
+        <Image src={product.imageUrl} width={520} height={480} alt=""/>
+        <footer>
+        <strong>{product.name}</strong>
+        <span>
+            {new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL' }).format(product.price / 100)}
+        </span>
+        </footer>
+    </Product>
+</Link>
+```

@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@stitches/react": "^1.2.8",
+    "env": "^0.0.2",
     "keen-slider": "^6.8.6",
     "next": "15.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stripe": "^17.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

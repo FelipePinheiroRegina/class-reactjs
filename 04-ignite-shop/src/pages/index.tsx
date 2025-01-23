@@ -4,13 +4,20 @@ import Image from "next/image"
 import { useKeenSlider } from 'keen-slider/react' 
 import 'keen-slider/keen-slider.min.css'
 
-import shirt1 from '@/assets/shirts/shirt1.png'
-import shirt2 from '@/assets/shirts/shirt2.png'
-import shirt3 from '@/assets/shirts/shirt3.png'
-import { useEffect, useState } from "react"
+import { stripe } from '@/lib/stripe'
+import Stripe from "stripe"
+import Link from "next/link"
+import { /*GetServerSideProps*/ GetStaticProps } from "next"
+interface HomeProps {
+  products: {
+    id: string,
+    name: string,
+    imageUrl: string,
+    price: number,
+  }[]
+}
 
-export default function Home() {
-  const [list, setList] = useState<number[]>([])
+export default function Home({ products }: HomeProps) {
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 3,
@@ -18,49 +25,73 @@ export default function Home() {
     }
   })
 
-  useEffect(() => {
-    setTimeout(() => {
-      setList([1, 2, 3, 4])
-    }, 2000)
-  }, [])
-
   return (
     <HomeContainer ref={sliderRef} className="keen-slider">
-        <Product className="keen-slider__slide">
-          <Image src={shirt1} width={520} height={480} alt=""/>
-
-          <footer>
-            <strong>Shirt X</strong>
-            <span>R$ 79,90</span>
-          </footer>
-        </Product>
-
-        <Product className="keen-slider__slide">
-          <Image src={shirt2} width={520} height={480} alt=""/>
-
-          <footer>
-            <strong>Shirt X</strong>
-            <span>R$ 79,90</span>
-          </footer>
-        </Product>
-
-        <Product className="keen-slider__slide">
-          <Image src={shirt3} width={520} height={480} alt=""/>
-
-          <footer>
-            <strong>Shirt X</strong>
-            <span>R$ 79,90</span>
-          </footer>
-        </Product>
-
-        <Product className="keen-slider__slide">
-          <Image src={shirt3} width={520} height={480} alt=""/>
-
-          <footer>
-            <strong>Shirt X</strong>
-            <span>R$ 79,90</span>
-          </footer>
-        </Product>
+        {products.map((product) => (
+          <Link href={`/product/${product.id}`} key={product.id}>
+            <Product className="keen-slider__slide" >
+              <Image src={product.imageUrl} width={520} height={480} alt=""/>
+              <footer>
+                <strong>{product.name}</strong>
+                <span>
+                  {product.price}
+                </span>
+              </footer>
+            </Product>
+          </Link>
+        ))}
     </HomeContainer>
   )
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const response = await stripe.products.list({
+    expand: ['data.default_price']
+  })
+
+  const products = response.data.map(product => {
+    const price = product.default_price as Stripe.Price
+
+    return {
+      id: product.id,
+      name:product.name,
+      imageUrl: product.images[0],
+      price: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL' }).format(Number(price.unit_amount) / 100)
+    }
+  })
+
+  return {
+    props: {
+      products,
+    },
+    revalidate: 60 * 60 * 2, // a cada duas horas  
+    // o next faz requisições para api a cada 2 horas para criar um novo html estatico. OBS.: você determina o tempo
+  }
+}
+
+/*
+export const getServerSideProps: GetServerSideProps = async () => {
+  const response = await stripe.products.list({
+    expand: ['data.default_price']
+  })
+
+  const products = response.data.map(product => {
+    const price = product.default_price as Stripe.Price
+
+    return {
+      id: product.id,
+      name:product.name,
+      imageUrl: product.images[0],
+      price: price.unit_amount
+    }
+  })
+
+  return {
+    props: {
+      products,
+    }
+  }
+}
+*/

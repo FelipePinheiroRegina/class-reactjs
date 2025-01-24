@@ -4,6 +4,8 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/image"
 //import { useRouter } from "next/router"
 import Stripe from "stripe"
+import axios from 'axios'
+import { useState } from "react"
 
 interface ProductProps {
   product: {
@@ -11,11 +13,14 @@ interface ProductProps {
     name: string,
     imageUrl: string,
     price: string,
-    description: string
+    description: string,
+    defaultPriceId: string,
   }
 }
 
 export default function Product({ product }: ProductProps) {
+  const [ isRedirect, setIsRedirect ] = useState(false)
+    //const router = useRouter()
     /*
     const { isFallback } = useRouter()
     if(isFallback) {
@@ -25,6 +30,27 @@ export default function Product({ product }: ProductProps) {
     // estado de loading case o fallback do getStaticPaths seja true
     // quando o fallback: "blocking" ele nao vai carregar a pagina até ter os dados
 
+    async function handleBuyProduct() {
+      setIsRedirect(true)
+
+      try {
+        const response = await axios.post('/api/checkout', {
+          priceId: product.defaultPriceId
+        })
+
+        const { checkoutUrl } = response.data
+
+        //router.push('/checkout') caso for uma rota interna no next se redireciona assim
+
+        window.location.href = checkoutUrl
+
+      } catch (err: any) {
+        setIsRedirect(false)
+        // conectar com uma ferramenta de observabilidade: datadog / sentry
+        alert('Falha ao comprar pedido')
+
+      }
+    }
     return (
       <ProductContainer>
         <ImageContainer>
@@ -37,7 +63,9 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product.description}</p>
 
-          <button>Buy right now</button>
+          <button 
+            disabled={isRedirect}
+            onClick={handleBuyProduct}>Buy right now</button>
         </ProductDetails>
       </ProductContainer>
     )
@@ -78,7 +106,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         price: new Intl.NumberFormat('pt-BR', {
           style: 'currency',
           currency: 'BRL' }).format(Number(price.unit_amount) / 100),
-        description: product.description
+        description: product.description,
+        defaultPriceId: price.id
       }
     },
     revalidate: 60 * 60 * 1, // 1 hora em cache

@@ -23,10 +23,11 @@ export const Product = styled('div', {
     alignItems: 'center',
     justifyContent: 'center',
 
+    
     img: {
-        objectFit: 'cover'
+        objectFit: 'cover'  
     },
-
+    
     footer: {
         position: 'absolute',
         bottom: '0.25rem',

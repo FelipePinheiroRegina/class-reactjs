@@ -21,8 +21,9 @@ export const ImageContainer = styled('div', {
     display: 'flex',
     alignItems: 'center',
 
+    
     img: {
-        objectFit: 'cover'
+        objectFit: 'cover',
     }
 })
 
@@ -59,7 +60,12 @@ export const ProductDetails = styled('div', {
         fontWeight: 'bold',
         fontSize: '$md',
 
-        '&:hover': {
+        '&:disabled': {
+            opacity: 0.7,
+            cursor: 'not-allowed'
+        },
+
+        '&:not(:disabled):hover': {
             backgroundColor: '$green300'
         }
     }

@@ -4,6 +4,37 @@ Aprendendo toda a base sobre react e seu ecossistema.
 
 ### [about performance on React](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/dt-money/README.md)
 
+
+# Projetcs
+
+# Pizza Shop
+![Login](./assets/login.png)
+<hr>
+
+![Register](./assets/register.png)
+<hr>
+
+![Dashboard](./assets/dashboard.png)
+<hr>
+
+![Menu](./assets/menu.png)
+<hr>
+
+![Alterar perfil](./assets/alter-profile.png)
+<hr>
+
+![Pedidos](./assets/orders.png)
+<hr>
+
+![status](./assets/status.png)
+<hr>
+
+![testes unitarios](./assets/unit.png)
+<hr>
+
+![testes e2e](./assets/e2e.png)
+<hr>
+
 # Github Blog
 
 ### [repository](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/github-blog)

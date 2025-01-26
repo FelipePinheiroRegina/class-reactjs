@@ -8,7 +8,8 @@ export const HomeContainer = styled('div', {
     minHeight: 656,
 
     a: {
-        color: '$gray100'
+        color: '$gray100',
+        textDecoration: 'none',
     }
 })
 
@@ -47,6 +48,13 @@ export const Product = styled('div', {
         opacity: 0,
         transition: 'all 0.2s ease-in-out',
 
+        div: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+        },
+
         strong: {
             fontSize: '$lg'
         },
@@ -55,7 +63,24 @@ export const Product = styled('div', {
             fontSize: '$xl',
             fontWeight: 'bold',
             color: '$green300',
-        }
+        },
+
+        '.Shop': {
+            backgroundColor: '$green500',
+            padding: '0.75rem',
+            borderRadius: 6,
+            border: 'none',
+
+            svg: {
+                color: '$gray100',
+                fontSize: '$2xl',
+            },
+
+            '&:hover': {
+                cursor: 'pointer',
+                backgroundColor: '$green300'
+            }
+        },
     },
 
     '&:hover': {

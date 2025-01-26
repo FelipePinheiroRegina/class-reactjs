@@ -1,25 +1,25 @@
+import { DefaultButton } from "@/components/default-button"
 import { stripe } from "@/lib/stripe"
 import { ProductContainer, ProductDetails, ImageContainer } from "@/styles/pages/product"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/image"
 //import { useRouter } from "next/router"
 import Stripe from "stripe"
-import axios from 'axios'
-import { useState } from "react"
+import Head from "next/head"
+import { useShop } from "@/contexts/ShopContext"
 
 interface ProductProps {
   product: {
     id: string,
     name: string,
     imageUrl: string,
-    price: string,
+    price: number,
     description: string,
     defaultPriceId: string,
   }
 }
 
 export default function Product({ product }: ProductProps) {
-  const [ isRedirect, setIsRedirect ] = useState(false)
     //const router = useRouter()
     /*
     const { isFallback } = useRouter()
@@ -30,44 +30,43 @@ export default function Product({ product }: ProductProps) {
     // estado de loading case o fallback do getStaticPaths seja true
     // quando o fallback: "blocking" ele nao vai carregar a pagina até ter os dados
 
-    async function handleBuyProduct() {
-      setIsRedirect(true)
+    const { handleAddProductShop } = useShop()
 
-      try {
-        const response = await axios.post('/api/checkout', {
-          priceId: product.defaultPriceId
-        })
-
-        const { checkoutUrl } = response.data
-
-        //router.push('/checkout') caso for uma rota interna no next se redireciona assim
-
-        window.location.href = checkoutUrl
-
-      } catch (err: any) {
-        setIsRedirect(false)
-        // conectar com uma ferramenta de observabilidade: datadog / sentry
-        alert('Falha ao comprar pedido')
-
-      }
-    }
     return (
-      <ProductContainer>
-        <ImageContainer>
-          <Image src={product.imageUrl} width={520} height={480} alt=""/>
-        </ImageContainer>
+      <>
+         <Head>
+          <title>{product.name} | Ignite Shop</title>
+        </Head>
 
-        <ProductDetails>
-          <h1>{product.name}</h1>
-          <span>{product.price}</span>
+        <ProductContainer>
+          <ImageContainer>
+            <Image src={product.imageUrl} width={520} height={480} alt=""/>
+          </ImageContainer>
 
-          <p>{product.description}</p>
+          <ProductDetails>
+            <h1>{product.name}</h1>
+            <span>
+              {new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL' }).format(product.price / 100)}
+            </span>
 
-          <button 
-            disabled={isRedirect}
-            onClick={handleBuyProduct}>Buy right now</button>
-        </ProductDetails>
-      </ProductContainer>
+            <p>{product.description}</p>
+
+            <DefaultButton 
+              label="Colocar na sacola"
+              onClick={() => handleAddProductShop({
+                id: product.id,
+                name: product.name,
+                description: product.description,
+                imageUrl: product.imageUrl,
+                price: product.price,
+                defaultPriceId: product.defaultPriceId
+              })}
+              />
+          </ProductDetails>
+        </ProductContainer>
+      </>
     )
   }
 
@@ -103,9 +102,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         id: product.id,
         name:product.name,
         imageUrl: product.images[0],
-        price: new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL' }).format(Number(price.unit_amount) / 100),
+        price: price.unit_amount,
         description: product.description,
         defaultPriceId: price.id
       }

@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
         hostname: 'files.stripe.com'
       }
     ]
+  },
+  experimental: {
+    optimizePackageImports: ["@chakra-ui/react"]
   }
 };
 

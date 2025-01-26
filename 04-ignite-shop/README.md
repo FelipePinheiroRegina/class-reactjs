@@ -5,7 +5,6 @@ Ele foi criado para superar as limitações das Single Page Applications (SPAs) 
 
 Seu principal propósito é atuar como uma camada intermediária, que processa e monta todo o HTML no servidor antes de enviá-lo ao navegador (SSR). Isso permite que o conteúdo seja exibido rapidamente ao usuário e seja amigável para mecanismos de busca (SEO).
 
-
 # (SSR) Server Side Rendering
 ```javascript
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -35,14 +34,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
 # O que é (SSG) Static Site Generation ? 
 - SSG é uma estratégia de renderização em que o HTML de uma página é gerado durante o processo de build da aplicação. Esse HTML é então servido como um arquivo estático para os usuários, eliminando a necessidade de processar requisições ao backend para cada visita à página.
 
-Por exemplo, suponha que nosso site receba 1 milhão de acessos em meia hora. Com SSG, o HTML da página é gerado uma única vez no momento do build e remontada a cada 10 minutos, se assim você estabelecer.
+Está estratégia é muito boa para Apps como Blogs, Artigos, E-commerce...
 
-Então, quando os 1 milhão de usuários acessar a página, o HTML já estará em cache, e os usuários serão atendidos diretamente com essa versão estática, sem disparar novas requisições ao backend.
+Por exemplo, suponha que nosso e-commerce receba 1 milhão de acessos em meia hora. Com SSG, o HTML da home com os produtos mais populares, é gerado no momento do build, e remontado a partir do tempo estabelecido para bater na api buscando alterações.
+
+Dito isso, quando os 1 milhão de usuários acessar a página, o HTML já estará em cache, e os usuários serão atendidos diretamente com essa versão estática, sem disparar novas requisições ao backend.
 Isso torna o processo muito mais performático, pois evita o processamento repetitivo no backend e reduz drasticamente a carga nos servidores. Como o conteúdo não muda durante o período configurado, todos os usuários recebem a mesma versão do HTML.
 
-
 # Como o next lida com imagens?
-Em muitos aplicativos tradicionais, é comum ver componentes renderizando imagens com 1000 pixels, mesmo que na tela sejam exibidos apenas 300 pixels. Ou seja, por que importar uma imagem de 1000 pixels para usá-la em um tamanho de 300 pixels? O Next.js otimiza isso automaticamente: se você vai usar uma imagem em 300 pixels, o Next.js converte essa imagem de 1000 pixels para 300 pixels em background, otimizando o carregamento.
+Sabe aquela imagem pesada, com mais de 5000 pixels, que poderia deixar seu app lento? O Next.js, por padrão, otimiza imagens automaticamente para garantir melhor performance. Se você quiser exibir essa imagem em um espaço de, por exemplo, 300 pixels, o Next.js redimensiona a imagem para o tamanho exato necessário. Além disso, ele converte o formato da imagem para versões mais leves, como WebP, sempre que possível, reduzindo o peso sem comprometer a qualidade visual.
 
 # O que é o turbopack do next?
 Turbopack é um novo bundler (empacotador) de JavaScript e CSS criado pelo Next.js, desenvolvido como uma alternativa ao Webpack. Ele foi projetado para ser mais rápido, escalável e eficiente, aproveitando a capacidade do Rust (um linguagem de programação de baixo nível) para otimizar o desempenho de construção e desenvolvimento no Next.js.
@@ -59,8 +59,6 @@ Ele é projetado para ser extremamente eficiente, especialmente em projetos gran
 Compatibilidade com o Webpack:
 
 O Turbopack não foi feito para substituir completamente o Webpack, mas para coexistir com ele. A ideia é que os desenvolvedores possam usar o Turbopack para melhorar a experiência de desenvolvimento, mas o Webpack ainda pode ser usado para compilar o código final para produção (embora no futuro o Turbopack deva ser capaz de também substituir o Webpack para builds de produção).
-
-
 
 
 A função é executada no lado do servidor, antes que o conteúdo seja enviado ao cliente. O navegador apenas renderiza o conteúdo depois que o servidor processa e retorna a estrutura com os dados prontos para o cliente.

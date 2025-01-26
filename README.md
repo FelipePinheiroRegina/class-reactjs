@@ -1,20 +1,6 @@
-<h1 align='center'>Hello World 🗺️</h1>
+<h1 align='center'>React</h1>
 
-## this course about react JS and your ecosystem.
-
-### last update 12-15-2024 (month-day-year)
-
-what i've learned so far: 
-
-Hooks: useState, useEffect, useReducer
-
-Forms: useForm, validation with zod, inputs(uncontrolled, controlled)
-
-Performance: memo, useMemo, useCallback, Context Selector, React Developer Tools
-
-Context Global: Context API, Redux, Redux Toolkit
-
-Data Management: React Query for caching and synchronizing remote states
+Aprendendo toda a base sobre react e seu ecossistema.
 
 ### [about performance on React](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/dt-money/README.md)
 

@@ -2,12 +2,58 @@
 
 Aprendendo toda a base sobre react e seu ecossistema.
 
-### [about performance on React](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/dt-money/README.md)
+Resumo do que eu aprendi até agora...
 
+- Next (SSR, SSG, SEO)
+- Hooks ( useReducer, useCallback, useMemo, customHooks, etc... )
+- React Query
+- React Hook Form
+- Redux
+- Context API
+- Testes unitários com Vitest
+- Testes e2e com Playwright
+- Tanstack Table
+
+Styles
+- Styled Components
+- Material UI
+- Emotion
+- Stitches
+- Chadcn
+- Magic UI
+- Chakra UI
+entre outros...
+
+### [about Next](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/README.md)
+### [about performance on React](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/dt-money/README.md)
 
 # Projetcs
 
+# Ignite Shop
+
+![Image1](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/src/assets/images-example/corousel.png)
+<hr>
+
+![Image2](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/src/assets/images-example/shop.png)
+<hr>
+
+![Image3](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/src/assets/images-example/details.png)
+<hr>
+
+![Image4](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/src/assets/images-example/corousel.png)
+<hr>
+
+![Image5](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/src/assets/images-example/stripe.png)
+<hr>
+
+![Image6](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/src/assets/images-example/success.png)
+<hr>
+
+
 # Pizza Shop
+
+[Repositório](https://github.com/FelipePinheiroRegina/class-reactjs/tree/main/pizza-shop)
+
 ![Login](./assets/login.png)
 <hr>
 

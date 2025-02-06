@@ -1,14 +1,8 @@
 import * as _stitches_react_types_styled_component from '@stitches/react/types/styled-component';
 import * as _stitches_react_types_css_util from '@stitches/react/types/css-util';
-import { ReactNode } from 'react';
+import { ComponentProps } from 'react';
 
-type ButtonProps = {
-    size: 'small' | 'large';
-    children: ReactNode;
-};
-declare const Button: _stitches_react_types_styled_component.StyledComponent<"button", {
-    size?: "small" | "large" | undefined;
-}, {}, _stitches_react_types_css_util.CSS<{}, {
+declare const Box: _stitches_react_types_styled_component.StyledComponent<"div", {}, {}, _stitches_react_types_css_util.CSS<{}, {
     colors: {
         white: string;
         black: string;
@@ -210,5 +204,7 @@ declare const Button: _stitches_react_types_styled_component.StyledComponent<"bu
     transition: "transitions";
     zIndex: "zIndices";
 }, {}>>;
+interface BoxProps extends ComponentProps<typeof Box> {
+}
 
-export { Button, type ButtonProps };
+export { Box, type BoxProps };

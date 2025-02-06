@@ -1,0 +1,12 @@
+.tokens-grid {
+    width: 100%;
+    text-align: center;
+}
+
+.tokens-grid thead tr {
+    background-color: #00B37E;
+}
+
+.tokens-grid tbody tr:nth-child(even) {
+    background-color: #E1E1E6;
+}

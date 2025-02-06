@@ -5,12 +5,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "lint": "eslint src/**/*.ts* --fix"
   },
   "dependencies": {
     "@ignite-ui/eslint-config": "*",
@@ -24,7 +21,6 @@
     "@ignite-ui/eslint-config": "*",
     "@storybook/addon-essentials": "^8.5.3",
     "@storybook/addon-interactions": "^8.5.3",
-    "@storybook/addon-onboarding": "^8.5.3",
     "@storybook/blocks": "^8.5.3",
     "@storybook/manager-api": "^8.5.3",
     "@storybook/react": "^8.5.3",

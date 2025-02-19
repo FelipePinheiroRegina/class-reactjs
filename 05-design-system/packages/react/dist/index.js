@@ -305,7 +305,7 @@ var Button = styled("button", {
           backgroundColor: "$white"
         },
         "&:disabled": {
-          backgroundColor: "$gray2"
+          backgroundColor: "$gray600"
         }
       }
     },

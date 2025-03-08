@@ -25,7 +25,7 @@ const meta: Meta<TextProps> = {
       },
     },
     size: {
-      control: 'select',
+      control: 'inline-radio',
       options: [
         'xxs',
         'xs',

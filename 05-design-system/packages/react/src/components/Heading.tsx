@@ -30,3 +30,5 @@ export interface HeadingProps extends ComponentProps<typeof Heading> {
   as?: ElementType
   size?: VariantProps<typeof Heading>['size']
 }
+
+Heading.displayName = 'Heading'

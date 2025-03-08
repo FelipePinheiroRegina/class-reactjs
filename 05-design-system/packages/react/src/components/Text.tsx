@@ -35,3 +35,5 @@ export interface TextProps extends ComponentProps<typeof Text> {
   as?: ElementType
   size?: VariantProps<typeof Text>['size']
 }
+
+Text.displayName = 'Text'

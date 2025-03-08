@@ -10,6 +10,9 @@ const meta: Meta<ButtonProps> = {
     children: 'Send',
   },
   argTypes: {
+    onClick: {
+      action: 'clicked',
+    },
     as: {
       control: 'text',
       description: 'Define o elemento HTML renderizado. Padrão: `<button>`.',
@@ -18,14 +21,18 @@ const meta: Meta<ButtonProps> = {
       },
     },
     variant: {
-      control: 'select',
+      control: 'inline-radio',
       description: 'Define o tipo do button, por padrão ele é primary.',
       options: ['primary', 'secondary', 'tertiary'],
     },
     size: {
-      control: 'select',
+      control: 'inline-radio',
       description: 'Define o tamanho do button, por padrão ele é md',
       options: ['sm', 'md'],
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Desabilita o button.',
     },
   },
 }

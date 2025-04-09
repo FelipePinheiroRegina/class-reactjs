@@ -29,6 +29,35 @@ entre outros...
 
 # Projetcs
 
+# Ignite Call
+
+![Image1](./assets/ignite-call/landing.png)
+<hr>
+
+![Image2](./assets/ignite-call/enter-name.png)
+<hr>
+
+![Image3](./assets/ignite-call/connect-calendar.png)
+<hr>
+
+![Image4](./assets/ignite-call/time-intervals.png)
+<hr>
+
+![Image5](./assets/ignite-call/set-description.png)
+<hr>
+
+![Image6](./assets/ignite-call/calendar-app.png)
+<hr>
+
+![Image6](./assets/ignite-call/calendar-and-hour-app.png)
+<hr>
+
+![Image7](./assets/ignite-call/create-schedule.png)
+<hr>
+
+![Image8](./assets/ignite-call/google-calendar.png)
+<hr>
+
 # Ignite Shop
 
 ![Image1](https://github.com/FelipePinheiroRegina/class-reactjs/blob/main/04-ignite-shop/src/assets/images-example/corousel.png)

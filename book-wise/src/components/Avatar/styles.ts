@@ -7,7 +7,7 @@ export const AvatarContainer = styled(Avatar.Root, {
   width: '4.5rem',
   height: '4.5rem',
   overflow: 'hidden',
-  padding: '$1',
+  padding: '$px',
 
   background: '$gradient-vertical',
 

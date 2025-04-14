@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { NavContainer, LinksNavigate } from './styles'
+import { NavContainer, LinksNavigate, Footer } from './styles'
 import logoBookwise from '@/assets/logo-bookwise.png'
 import {
   Binoculars,
@@ -15,10 +15,7 @@ import { Text } from '../Text'
 
 export function Nav() {
   const pathName = usePathname()
-  const user = {
-    name: 'Felipe',
-    avatar: 'https://github.com/FelipePinheiroRegina.png',
-  }
+  const user = true
   return (
     <NavContainer>
       <Image
@@ -39,24 +36,32 @@ export function Nav() {
           Explore
         </Link>
 
-        <Link href="/profile" data-checked={pathName === '/profile'}>
-          <User />
-          Profile
-        </Link>
+        {user && (
+          <Link href="/profile" data-checked={pathName === '/profile'}>
+            <User />
+            Profile
+          </Link>
+        )}
       </LinksNavigate>
 
-      {!!user?.name ? (
-        <Link href="/auth">
-          <Avatar src={user.avatar} size="small" alt={user.name} />
-          <Text>{user.name}</Text>
-          <SignOut color="#F75A68" />
-        </Link>
-      ) : (
-        <Link href="/auth">
-          <Text>log in</Text>
-          <SignIn color="#50B2C0" />
-        </Link>
-      )}
+      <Footer>
+        {user ? (
+          <Link href="/auth">
+            <Avatar
+              src="https://github.com/FelipePinheiroRegina.png"
+              size="small"
+              alt="Felipe Pinheiro"
+            />
+            <Text>Felipe Pinheiro</Text>
+            <SignOut color="#F75A68" />
+          </Link>
+        ) : (
+          <Link href="/auth">
+            <Text>log in</Text>
+            <SignIn color="#50B2C0" />
+          </Link>
+        )}
+      </Footer>
     </NavContainer>
   )
 }

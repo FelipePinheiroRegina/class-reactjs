@@ -2,8 +2,10 @@ import { styled } from '@/styles/stitches.config'
 import { Link } from '../Link'
 
 export const NavContainer = styled('nav', {
-  display: 'grid',
-  gridTemplateRows: 'max-content 1fr max-content',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+
   height: 'calc(100vh - 200px)',
   width: 232,
   justifyContent: 'center',
@@ -15,7 +17,12 @@ export const NavContainer = styled('nav', {
 })
 
 export const LinksNavigate = styled('div', {
-  marginTop: 64,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '100%',
+  flex: 1,
+  marginTop: 60,
 
   [`${Link}`]: {
     color: '$gray400',
@@ -37,4 +44,10 @@ export const LinksNavigate = styled('div', {
   [`${Link} + ${Link}`]: {
     marginTop: 16,
   },
+})
+
+export const Footer = styled('footer', {
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
 })

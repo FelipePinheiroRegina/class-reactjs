@@ -28,18 +28,18 @@ export function Nav() {
       <LinksNavigate>
         <Link href="/" data-checked={pathName === '/'}>
           <ChartLineUp />
-          Home
+          <Text>Home</Text>
         </Link>
 
         <Link href="/explore" data-checked={pathName === '/explore'}>
           <Binoculars />
-          Explore
+          <Text>Explore</Text>
         </Link>
 
         {user && (
           <Link href="/profile" data-checked={pathName === '/profile'}>
             <User />
-            Profile
+            <Text>Profile</Text>
           </Link>
         )}
       </LinksNavigate>

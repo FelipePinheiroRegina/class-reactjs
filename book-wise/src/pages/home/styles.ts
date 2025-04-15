@@ -12,7 +12,7 @@ export const HomeContainer = styled('div', {
 export const Content = styled('main', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '$10',
+  gap: '4rem',
 
   paddingTop: '4.5rem',
   paddingLeft: '6rem',
@@ -22,6 +22,7 @@ export const Content = styled('main', {
     display: 'flex',
     alignItems: 'center',
     gap: 12,
+    fontWeight: '$bold',
 
     svg: {
       fontSize: 32,

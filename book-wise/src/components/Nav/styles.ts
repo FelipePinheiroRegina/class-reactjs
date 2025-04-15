@@ -1,5 +1,6 @@
 import { styled } from '@/styles/stitches.config'
 import { Link } from '../Link'
+import { Text } from '../Text'
 
 export const NavContainer = styled('nav', {
   display: 'flex',
@@ -26,11 +27,17 @@ export const LinksNavigate = styled('div', {
 
   [`${Link}`]: {
     color: '$gray400',
-    fontWeight: '$regular',
+
+    [`${Text}`]: {
+      color: '$gray400',
+      fontWeight: '$regular',
+    },
 
     '&[data-checked="true"]': {
-      color: '$gray100',
-      fontWeight: 'bold',
+      [`${Text}`]: {
+        color: '$gray100',
+        fontWeight: 'bold',
+      },
 
       '&::before': {
         content: '.',

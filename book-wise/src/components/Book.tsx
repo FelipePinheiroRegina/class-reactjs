@@ -5,6 +5,7 @@ import { Text } from './Text'
 import imageGeorgeBook from '@/assets/books/Book.png'
 import Image from 'next/image'
 import { Rating } from './Rating'
+import { ButtonHTMLAttributes } from 'react'
 
 const BookContainer = styled(Card, {
   display: 'flex',
@@ -17,6 +18,7 @@ const BookDetails = styled('div', {
   justifyContent: 'space-between',
 
   [`${Heading}`]: {
+    fontWeight: '$bold',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -25,19 +27,20 @@ const BookDetails = styled('div', {
   },
 
   [`${Text}`]: {
+    textAlign: 'left',
     color: '$gray400',
   },
 })
 
-interface BookProps {
+interface BookProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   imageSize?: 'small' | 'large'
 }
 
-export function Book({ imageSize = 'small' }: BookProps) {
+export function Book({ imageSize = 'small', ...props }: BookProps) {
   const typeImage = imageSize === 'small'
 
   return (
-    <BookContainer variant="secondary">
+    <BookContainer as="button" variant="secondary" hover="active" {...props}>
       <Image
         src={imageGeorgeBook}
         alt="image george book"

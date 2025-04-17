@@ -4,7 +4,6 @@ import { styled } from '@/styles/stitches.config'
 
 export const ProfileContainer = styled('div', {
   display: 'grid',
-  height: '100vh',
   gridTemplateColumns: '232px 1fr',
   padding: '$5',
 })

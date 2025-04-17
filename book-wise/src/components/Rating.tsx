@@ -4,10 +4,36 @@ import { styled } from '@/styles/stitches.config'
 
 const RatingContainer = styled('div', {
   display: 'flex',
-  gap: '0.5rem',
+  gap: 4,
 
   svg: {
     color: '$purple100',
+  },
+
+  variants: {
+    sizes: {
+      sm: {
+        svg: {
+          fontSize: '$md',
+        },
+      },
+
+      md: {
+        svg: {
+          fontSize: '$xl',
+        },
+      },
+
+      lg: {
+        svg: {
+          fontSize: '$3xl',
+        },
+      },
+    },
+  },
+
+  defaultVariants: {
+    sizes: 'sm',
   },
 })
 
@@ -16,14 +42,21 @@ interface RatingProps {
   value: number
   onChange?: Dispatch<SetStateAction<number>>
   disabled?: boolean
+  size?: 'sm' | 'md' | 'lg'
 }
 
-export function Rating({ max = 5, value, onChange, disabled }: RatingProps) {
+export function Rating({
+  max = 5,
+  value,
+  onChange,
+  disabled,
+  size = 'sm',
+}: RatingProps) {
   const [hovered, setHovered] = useState<number | null>(null)
   const currentRating = hovered ?? value
 
   return (
-    <RatingContainer>
+    <RatingContainer sizes={size}>
       {Array.from({ length: max }).map((_, index) => {
         const filled = index < currentRating
 
@@ -31,7 +64,6 @@ export function Rating({ max = 5, value, onChange, disabled }: RatingProps) {
           return (
             <Star
               key={index}
-              size={16}
               weight={filled ? 'fill' : 'regular'}
               cursor="default"
             />
@@ -41,7 +73,6 @@ export function Rating({ max = 5, value, onChange, disabled }: RatingProps) {
         return (
           <Star
             key={index}
-            size={20}
             cursor="pointer"
             weight={filled ? 'fill' : 'regular'}
             onMouseEnter={() => setHovered(index + 1)}

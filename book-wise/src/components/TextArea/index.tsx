@@ -9,9 +9,11 @@ export function TextArea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <TextAreaContainer>
       <TextAreaStyled {...props} />
-      <TextAreaLetterCounter>
-        {props.value?.toString().length} / {props.maxLength}
-      </TextAreaLetterCounter>
+      {props.maxLength && (
+        <TextAreaLetterCounter>
+          {props.value?.toString().length} / {props.maxLength}
+        </TextAreaLetterCounter>
+      )}
     </TextAreaContainer>
   )
 }

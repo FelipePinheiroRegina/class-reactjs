@@ -6,8 +6,11 @@ import {
 } from '@chakra-ui/react'
 
 import { DrawerBodyStyled } from './styles'
-import { Card } from '@/components/Card'
-
+import { BookDetails } from './components/BookDetails'
+import { Comment } from './components/Comment'
+import { Text } from '@/components/Text'
+import { Review } from './components/Review'
+import { DialogAuth } from '@/components/DialogAuth'
 interface DrawerBookProps {
   open: boolean
   onOpenChange: (value: DrawerOpenChangeDetails) => void
@@ -29,12 +32,19 @@ export function DrawerBook({ onOpenChange, open }: DrawerBookProps) {
               </Drawer.CloseTrigger>
             </Drawer.Header>
             <DrawerBodyStyled>
-              <Card>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-                recusandae laudantium assumenda ea adipisci, ratione sunt
-                expedita veritatis, magnam accusantium suscipit autem distinctio
-                itaque cum esse saepe ad doloribus quia.
-              </Card>
+              <BookDetails />
+              <div>
+                <div className="auth">
+                  <Text size="sm">Reviews</Text>
+                  <DialogAuth />
+                </div>
+
+                <div className="reviews">
+                  <Comment />
+                  <Review />
+                  <Review />
+                </div>
+              </div>
             </DrawerBodyStyled>
           </Drawer.Content>
         </Drawer.Positioner>

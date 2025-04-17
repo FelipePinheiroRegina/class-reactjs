@@ -13,12 +13,17 @@ import Image from 'next/image'
 import { Heading } from '@/components/Heading'
 import { Text } from '@/components/Text'
 import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
 
 export default function Register() {
   const router = useRouter()
 
   async function handleNavigateGuest() {
     router.push('/')
+  }
+
+  async function handleLogGoogle() {
+    await signIn('google')
   }
 
   return (
@@ -37,7 +42,7 @@ export default function Register() {
         <AuthenticationModes>
           <Heading>Welcome to BookWise!</Heading>
           <Text>log in or access as a guest</Text>
-          <AuthCard as="button" hover="active">
+          <AuthCard as="button" hover="active" onClick={handleLogGoogle}>
             <Image
               src={googleIcon}
               height={32}

@@ -41,8 +41,8 @@ export default function Explore() {
           </Header>
           <Categories>
             <Tag>All</Tag>
-            <Tag>Computing</Tag>
-            <Tag>Education</Tag>
+            <Tag data-checked>Computing</Tag>
+            <Tag data-checked>Education</Tag>
             <Tag>Fantasy</Tag>
             <Tag>Science fiction</Tag>
             <Tag>Horror</Tag>

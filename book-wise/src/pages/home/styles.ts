@@ -4,7 +4,6 @@ import { Card } from '@/components/Card'
 
 export const HomeContainer = styled('div', {
   display: 'grid',
-  height: '100vh',
   gridTemplateColumns: '232px 1fr',
   padding: '$5',
 })

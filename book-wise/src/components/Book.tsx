@@ -10,6 +10,7 @@ import { ButtonHTMLAttributes } from 'react'
 const BookContainer = styled(Card, {
   display: 'flex',
   gap: '$5',
+  minWidth: 318,
 })
 
 const BookDetails = styled('div', {
@@ -56,7 +57,7 @@ export function Book({ imageSize = 'small', ...props }: BookProps) {
           <Text>George Orwell</Text>
         </div>
 
-        <Rating value={4} disabled />
+        <Rating value={3} disabled />
       </BookDetails>
     </BookContainer>
   )

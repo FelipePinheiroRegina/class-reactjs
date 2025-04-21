@@ -17,13 +17,12 @@ import { signIn } from 'next-auth/react'
 
 export default function Register() {
   const router = useRouter()
-
   async function handleNavigateGuest() {
-    router.push('/')
+    router.push('/home')
   }
 
   async function handleLogGoogle() {
-    await signIn('google')
+    await signIn('google', { callbackUrl: '/home' })
   }
 
   return (

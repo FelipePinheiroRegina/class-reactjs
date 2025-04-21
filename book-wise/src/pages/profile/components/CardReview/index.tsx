@@ -3,33 +3,37 @@ import { Text } from '@/components/Text'
 import { Rating } from '@/components/Rating'
 import Image from 'next/image'
 import { Heading } from '@/components/Heading'
-import imageBookHobbit from '@/assets/books/o-hobbit.png'
 
-export function CardReview() {
+interface CardReviewProps {
+  cover_url: string
+  name: string
+  author: string
+  summary: string
+  averageRate: number
+}
+
+export function CardReview({
+  cover_url,
+  author,
+  name,
+  summary,
+  averageRate,
+}: CardReviewProps) {
   return (
     <CardReviewContainer variant="secondary">
       <BookContainer>
-        <Image
-          src={imageBookHobbit}
-          alt="image book hobbit"
-          height={134}
-          width={98}
-        />
+        <Image src={cover_url} alt={`${name} image`} height={134} width={98} />
         <BookDetails>
           <div className="author">
-            <Heading size="md">The Hobbit</Heading>
-            <Text>J.R.R Tolkien</Text>
+            <Heading size="md">{name}</Heading>
+            <Text>{author}</Text>
           </div>
 
-          <Rating value={4} disabled />
+          <Rating value={averageRate} disabled />
         </BookDetails>
       </BookContainer>
 
-      <Text>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore incidunt
-        corporis repellat sint accusamus velit eum temporibus dolores obcaecati,
-        molestiae error dicta vel enim quae, quibusdam eligendi omnis magni a.
-      </Text>
+      <Text>{summary}</Text>
     </CardReviewContainer>
   )
 }

@@ -10,60 +10,49 @@ import { Text } from '@/components/Text'
 import { Rating } from '@/components/Rating'
 import Image from 'next/image'
 import { Heading } from '@/components/Heading'
-import imageBookHobbit from '@/assets/books/o-hobbit.png'
+import { LastReviews } from '../../index.page'
+import dayjs from 'dayjs'
 
 interface CardReviewProps {
-  user?: boolean
+  props: LastReviews
 }
 
-export function CardReview({ user = false }: CardReviewProps) {
+export function CardReview({ props }: CardReviewProps) {
+  const date = dayjs(new Date(props.created_at)).fromNow()
+  const dateTime = dayjs(new Date(props.created_at)).format('DD MM YYYY')
+
   return (
-    <CardReviewContainer variant={user ? 'primary' : 'secondary'}>
-      {!user && (
-        <Header data-mb="true">
-          <AuthorDetails>
-            <Avatar
-              size="small"
-              src="https://github.com/FelipePinheiroRegina.png"
-              alt="Image profile Felipe"
-            />
+    <CardReviewContainer variant="secondary" hover="active" as="button">
+      <Header>
+        <AuthorDetails>
+          <Avatar
+            size="small"
+            src={props.user.image}
+            alt="Image profile Felipe"
+          />
 
-            <div>
-              <Text>Felipe Pinheiro</Text>
-              <Text as="time" size="sm">
-                Today
-              </Text>
-            </div>
-          </AuthorDetails>
+          <div>
+            <Text>{props.user.name}</Text>
+            <Text as="time" size="sm" dateTime={dateTime}>
+              {date}
+            </Text>
+          </div>
+        </AuthorDetails>
 
-          <Rating value={4} disabled />
-        </Header>
-      )}
+        <Rating value={props.rate} disabled />
+      </Header>
 
       <BookContainer>
         <Image
-          src={imageBookHobbit}
+          src={props.cover_url}
           alt="image book hobbit"
           height={152}
           width={108}
         />
         <BookDetails>
-          {user && (
-            <Header>
-              <Text as="time" size="sm">
-                Two days ago
-              </Text>
-              <Rating value={4} disabled />
-            </Header>
-          )}
-          <Heading size="md">The Hobbit</Heading>
-          <Text>J.R.R Tolkien</Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-            incidunt corporis repellat sint accusamus velit eum temporibus
-            dolores obcaecati, molestiae error dicta vel enim quae, quibusdam
-            eligendi omnis magni a.
-          </Text>
+          <Heading size="md">{props.name}</Heading>
+          <Text>{props.author}</Text>
+          <Text>{props.summary}</Text>
         </BookDetails>
       </BookContainer>
     </CardReviewContainer>

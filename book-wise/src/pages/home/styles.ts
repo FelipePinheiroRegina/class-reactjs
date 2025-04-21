@@ -55,4 +55,8 @@ export const LatestReviews = styled('div', {
   },
 })
 
-export const PopularBooks = styled('aside', {})
+export const PopularBooks = styled('aside', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 12,
+})

@@ -25,16 +25,38 @@ import { Text } from '@/components/Text'
 import { Avatar } from '@/components/Avatar'
 import { Link } from '@/components/Link'
 import { NextSeo } from 'next-seo'
+import { useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
+import { getAllUserBooks } from '@/api/get-all-user-books'
+import { useSession } from 'next-auth/react'
+import dayjs from 'dayjs'
 
 export default function Profile() {
-  const otherProfile = false
+  const router = useRouter()
+  const otherUserId = router.query.id as string | undefined
+  const { status, data } = useSession()
+  const queryId = otherUserId ?? data?.user.id
+
+  const { data: allUserBooks } = useQuery({
+    queryKey: ['get-all-user-books', queryId],
+    queryFn: () => getAllUserBooks({ id: queryId as string }),
+    enabled: !!queryId && status !== 'loading',
+    staleTime: 0,
+  })
+
+  if (status === 'loading') {
+    return <div>CARREGANDO...</div>
+  }
+
+  console.log(allUserBooks)
+
   return (
     <>
       <NextSeo title="Profile | BookWise" />
       <ProfileContainer>
-        <Nav />
+        <Nav user={data?.user ? data.user : null} />
         <Content>
-          {otherProfile ? (
+          {otherUserId ? (
             <Link href="/">
               <CaretLeft />
               Previous
@@ -53,18 +75,21 @@ export default function Profile() {
                 icon={MagnifyingGlass}
               />
 
-              <div className="gap">
-                <Text size="sm" as="time">
-                  2 days ago
-                </Text>
-                <CardReview />
-              </div>
-              <div className="gap">
-                <Text size="sm" as="time">
-                  2 days ago
-                </Text>
-                <CardReview />
-              </div>
+              {allUserBooks &&
+                allUserBooks.map((book) => (
+                  <div className="gap" key={book.book_id}>
+                    <Text size="sm" as="time">
+                      {dayjs(new Date(book.created_at)).fromNow()}
+                    </Text>
+                    <CardReview
+                      author={book.author}
+                      name={book.name}
+                      averageRate={book.averageRate}
+                      cover_url={book.cover_url}
+                      summary={book.summary}
+                    />
+                  </div>
+                ))}
             </Reviews>
 
             <ProfileDetails>

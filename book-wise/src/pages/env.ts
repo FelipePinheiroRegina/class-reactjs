@@ -5,6 +5,8 @@ const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.coerce.string(),
   GOOGLE_CLIENT_SECRET: z.coerce.string(),
   DATABASE_URL: z.coerce.string(),
+  NEXTAUTH_URL: z.coerce.string(),
+  NEXTAUTH_SECRET: z.coerce.string(),
 })
 
 const env = envSchema.parse(_env)

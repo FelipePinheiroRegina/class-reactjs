@@ -28,27 +28,38 @@ import { NextSeo } from 'next-seo'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { getAllUserBooks } from '@/api/get-all-user-books'
+import { getUserProfileData } from '@/api/get-user-profile-data'
 import { useSession } from 'next-auth/react'
 import dayjs from 'dayjs'
+import { getUserDetailsData } from '@/api/get-user-details-data'
 
 export default function Profile() {
   const router = useRouter()
   const otherUserId = router.query.id as string | undefined
   const { status, data } = useSession()
-  const queryId = otherUserId ?? data?.user.id
+  const userId = otherUserId ?? data?.user.id
 
   const { data: allUserBooks } = useQuery({
-    queryKey: ['get-all-user-books', queryId],
-    queryFn: () => getAllUserBooks({ id: queryId as string }),
-    enabled: !!queryId && status !== 'loading',
-    staleTime: 0,
+    queryKey: ['get-all-user-books', userId],
+    queryFn: () => getAllUserBooks({ id: userId as string }),
+    enabled: !!userId && status !== 'loading',
+  })
+
+  const { data: getUserProfileDataRes } = useQuery({
+    queryKey: ['get-user-profile-data', userId],
+    queryFn: () => getUserProfileData({ id: userId as string }),
+    enabled: !!userId && status !== 'loading',
+  })
+
+  const { data: getUserDetailsDataRes } = useQuery({
+    queryKey: ['get-user-details-data', userId],
+    queryFn: () => getUserDetailsData({ id: userId as string }),
+    enabled: !!userId && status !== 'loading',
   })
 
   if (status === 'loading') {
     return <div>CARREGANDO...</div>
   }
-
-  console.log(allUserBooks)
 
   return (
     <>
@@ -57,7 +68,7 @@ export default function Profile() {
         <Nav user={data?.user ? data.user : null} />
         <Content>
           {otherUserId ? (
-            <Link href="/">
+            <Link href="/home">
               <CaretLeft />
               Previous
             </Link>
@@ -95,15 +106,19 @@ export default function Profile() {
             <ProfileDetails>
               <UserDetails>
                 <Avatar
-                  src="https://github.com/FelipePinheiroRegina.png"
-                  alt="Felipe Pinheiro"
+                  src={getUserProfileDataRes?.image ?? ''}
+                  alt={`image profile ${getUserProfileDataRes?.name}`}
                 />
 
                 <div className="user">
                   <Text as="strong" size="xl">
-                    Felipe Pinheiro
+                    {getUserProfileDataRes?.name ?? ''}
                   </Text>
-                  <Text size="sm">Member since 2019</Text>
+                  <Text size="sm">
+                    {`
+                    Member since 
+                    ${dayjs(new Date(getUserProfileDataRes?.created_at ?? new Date())).get('year')}`}
+                  </Text>
                 </div>
               </UserDetails>
               <DividingLine />
@@ -111,28 +126,36 @@ export default function Profile() {
                 <Detail>
                   <BookOpen />
                   <div>
-                    <Text as="strong">3853</Text>
+                    <Text as="strong">
+                      {getUserDetailsDataRes?.pagesRead ?? 0}
+                    </Text>
                     <Text size="sm">Pages read</Text>
                   </div>
                 </Detail>
                 <Detail>
                   <Books />
                   <div>
-                    <Text as="strong">10</Text>
+                    <Text as="strong">
+                      {getUserDetailsDataRes?.reviewedBooks ?? 0}
+                    </Text>
                     <Text size="sm">Reviewed books</Text>
                   </div>
                 </Detail>
                 <Detail>
                   <UserList />
                   <div>
-                    <Text as="strong">8</Text>
+                    <Text as="strong">
+                      {getUserDetailsDataRes?.readAuthors ?? 0}
+                    </Text>
                     <Text size="sm">Read authors</Text>
                   </div>
                 </Detail>
                 <Detail>
                   <BookmarkSimple />
                   <div>
-                    <Text as="strong">Computing</Text>
+                    <Text as="strong">
+                      {getUserDetailsDataRes?.mostReadCategory ?? ''}
+                    </Text>
                     <Text size="sm">Most read category</Text>
                   </div>
                 </Detail>

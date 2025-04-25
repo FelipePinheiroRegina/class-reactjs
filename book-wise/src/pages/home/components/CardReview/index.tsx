@@ -12,47 +12,53 @@ import Image from 'next/image'
 import { Heading } from '@/components/Heading'
 import { LastReviews } from '../../index.page'
 import dayjs from 'dayjs'
+import { ButtonHTMLAttributes } from 'react'
 
-interface CardReviewProps {
-  props: LastReviews
+interface CardReviewProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  review: LastReviews
 }
 
-export function CardReview({ props }: CardReviewProps) {
-  const date = dayjs(new Date(props.created_at)).fromNow()
-  const dateTime = dayjs(new Date(props.created_at)).format('DD MM YYYY')
+export function CardReview({ review, ...props }: CardReviewProps) {
+  const date = dayjs(new Date(review.created_at)).fromNow()
+  const dateTime = dayjs(new Date(review.created_at)).format('DD MM YYYY')
 
   return (
-    <CardReviewContainer variant="secondary" hover="active" as="button">
+    <CardReviewContainer
+      variant="secondary"
+      hover="active"
+      as="button"
+      {...props}
+    >
       <Header>
         <AuthorDetails>
           <Avatar
             size="small"
-            src={props.user.image}
+            src={review.user.image}
             alt="Image profile Felipe"
           />
 
           <div>
-            <Text>{props.user.name}</Text>
+            <Text>{review.user.name}</Text>
             <Text as="time" size="sm" dateTime={dateTime}>
               {date}
             </Text>
           </div>
         </AuthorDetails>
 
-        <Rating value={props.rate} disabled />
+        <Rating value={review.rate} disabled />
       </Header>
 
       <BookContainer>
         <Image
-          src={props.cover_url}
+          src={review.cover_url}
           alt="image book hobbit"
           height={152}
           width={108}
         />
         <BookDetails>
-          <Heading size="md">{props.name}</Heading>
-          <Text>{props.author}</Text>
-          <Text>{props.summary}</Text>
+          <Heading size="md">{review.name}</Heading>
+          <Text>{review.author}</Text>
+          <Text>{review.summary}</Text>
         </BookDetails>
       </BookContainer>
     </CardReviewContainer>

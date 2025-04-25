@@ -25,23 +25,44 @@ import { Text } from '@/components/Text'
 import { Avatar } from '@/components/Avatar'
 import { Link } from '@/components/Link'
 import { NextSeo } from 'next-seo'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
-import { getAllUserBooks } from '@/api/get-all-user-books'
+import { getUserBooks } from '@/api/get-user-books'
 import { getUserProfileData } from '@/api/get-user-profile-data'
 import { useSession } from 'next-auth/react'
 import dayjs from 'dayjs'
 import { getUserDetailsData } from '@/api/get-user-details-data'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { BooksNotFound } from './components/BooksNotFound'
+
+const schemaSearch = z.object({
+  search: z
+    .string({ message: 'Please fill the field before search' })
+    .transform((value) => encodeURIComponent(value)),
+})
+
+type SchemaSearch = z.infer<typeof schemaSearch>
 
 export default function Profile() {
   const router = useRouter()
   const otherUserId = router.query.id as string | undefined
+  const search = decodeURIComponent(String(router.query.search ?? ''))
   const { status, data } = useSession()
   const userId = otherUserId ?? data?.user.id
+  const queryClient = useQueryClient()
 
-  const { data: allUserBooks } = useQuery({
-    queryKey: ['get-all-user-books', userId],
-    queryFn: () => getAllUserBooks({ id: userId as string }),
+  const { register, handleSubmit } = useForm<SchemaSearch>({
+    resolver: zodResolver(schemaSearch),
+    values: {
+      search: search,
+    },
+  })
+
+  const { data: userBooksData } = useQuery({
+    queryKey: ['get-user-books', userId, search],
+    queryFn: () => getUserBooks({ id: userId as string, search }),
     enabled: !!userId && status !== 'loading',
   })
 
@@ -56,6 +77,26 @@ export default function Profile() {
     queryFn: () => getUserDetailsData({ id: userId as string }),
     enabled: !!userId && status !== 'loading',
   })
+
+  function handleSearchParams(data: SchemaSearch) {
+    const query = {
+      ...router.query,
+      search: data.search || undefined,
+    }
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query,
+      },
+      undefined,
+      { shallow: true },
+    )
+
+    queryClient.invalidateQueries({
+      queryKey: ['get-user-books', userId, search],
+    })
+  }
 
   if (status === 'loading') {
     return <div>CARREGANDO...</div>
@@ -81,13 +122,19 @@ export default function Profile() {
 
           <div className="flex-row">
             <Reviews>
-              <TextInput
-                placeholder="Search for reviewed book"
-                icon={MagnifyingGlass}
-              />
+              <form
+                onSubmit={handleSubmit(handleSearchParams)}
+                onBlur={handleSubmit(handleSearchParams)}
+              >
+                <TextInput
+                  placeholder="Search for name book or name author"
+                  icon={MagnifyingGlass}
+                  {...register('search')}
+                />
+              </form>
 
-              {allUserBooks &&
-                allUserBooks.map((book) => (
+              {userBooksData && userBooksData?.length > 0 ? (
+                userBooksData.map((book) => (
                   <div className="gap" key={book.book_id}>
                     <Text size="sm" as="time">
                       {dayjs(new Date(book.created_at)).fromNow()}
@@ -100,7 +147,10 @@ export default function Profile() {
                       summary={book.summary}
                     />
                   </div>
-                ))}
+                ))
+              ) : (
+                <BooksNotFound />
+              )}
             </Reviews>
 
             <ProfileDetails>

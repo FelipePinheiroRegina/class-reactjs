@@ -6,6 +6,7 @@ import { prisma } from '@/lib/prisma'
 
 const schemaQuery = z.object({
   id: z.string(),
+  search: z.string().optional(),
 })
 
 export default async function handler(
@@ -23,11 +24,29 @@ export default async function handler(
     return
   }
 
-  const { id } = schemaQuery.parse(req.query)
+  const { id, search } = schemaQuery.parse(req.query)
 
   const allRatings = await prisma.rating.findMany({
     where: {
       user_id: id,
+      book: search
+        ? {
+            OR: [
+              {
+                name: {
+                  contains: search,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                author: {
+                  contains: search,
+                  mode: 'insensitive',
+                },
+              },
+            ],
+          }
+        : undefined,
     },
     orderBy: {
       created_at: 'asc',

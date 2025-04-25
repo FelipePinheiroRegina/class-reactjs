@@ -19,6 +19,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth].api'
 import { LastReview } from './components/LastReview'
 import axios from 'axios'
 import { env } from '../env'
+import { useRouter } from 'next/router'
 
 interface Root {
   lastReviewUserLogged: LastReviewUserLogged | null
@@ -45,21 +46,24 @@ export interface LastReviews {
   user: User
 }
 
-export interface PopularBook {
-  id: string
-  cover_url: string
-  name: string
-  author: string
-  rate: number
-}
-
 interface HomeProps {
   user: User | null
   lastReviews: Root
-  popularBooks: PopularBook[]
+  popularBooks: ShortBook[]
 }
 
 export default function Home({ user, lastReviews, popularBooks }: HomeProps) {
+  const router = useRouter()
+
+  async function handleNavigateUserProfileById(userId: string) {
+    if (userId === user?.id) {
+      await router.push({ pathname: '/profile' })
+      return
+    }
+
+    await router.push({ pathname: '/profile', query: { id: userId } })
+  }
+
   return (
     <>
       <NextSeo title="Home | BookWise" />
@@ -92,7 +96,13 @@ export default function Home({ user, lastReviews, popularBooks }: HomeProps) {
 
                 {lastReviews.lastReviews &&
                   lastReviews.lastReviews.map((review) => (
-                    <CardReview key={review.review_id} props={review} />
+                    <CardReview
+                      key={review.review_id}
+                      review={review}
+                      onClick={() =>
+                        handleNavigateUserProfileById(review.user.id)
+                      }
+                    />
                   ))}
               </LatestReviews>
             </Reviews>

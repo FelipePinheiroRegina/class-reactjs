@@ -3,7 +3,7 @@ import { styled } from '@/styles/stitches.config'
 
 export const ExploreContainer = styled('div', {
   display: 'grid',
-  gridTemplateColumns: '232px 1fr',
+  gridTemplateColumns: '232px minmax(0, 1200px)',
   padding: '$5',
 })
 
@@ -42,6 +42,8 @@ export const Categories = styled('nav', {
   alignItems: 'center',
   gap: '$3',
   marginBottom: 48,
+  overflowX: 'auto',
+  paddingBottom: 12,
 })
 
 export const Books = styled('main', {

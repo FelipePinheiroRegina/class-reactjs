@@ -5,7 +5,6 @@ import { Text } from './Text'
 import Image from 'next/image'
 import { Rating } from './Rating'
 import { ButtonHTMLAttributes } from 'react'
-import { PopularBook } from '@/pages/home/index.page'
 
 const BookContainer = styled(Card, {
   display: 'flex',
@@ -35,7 +34,7 @@ const BookDetails = styled('div', {
 
 interface BookProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   imageSize?: 'small' | 'large'
-  book: PopularBook
+  book: ShortBook
 }
 
 export function Book({ imageSize = 'small', book, ...props }: BookProps) {

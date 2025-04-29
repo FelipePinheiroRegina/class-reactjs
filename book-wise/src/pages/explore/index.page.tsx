@@ -10,37 +10,57 @@ import { DrawerBook } from './components/DrawerBook'
 import { useEffect, useRef, useState } from 'react'
 import { DrawerOpenChangeDetails } from '@chakra-ui/react'
 import { useSession } from 'next-auth/react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getBooks } from '@/api/get-books'
 import { getCategories } from '@/api/get-categories'
 import { useRouter } from 'next/router'
-import { Pagination } from '@/components/Pagination'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+const schemaForm = z.object({
+  search: z.string(),
+})
+
+type SchemaForm = z.infer<typeof schemaForm>
 
 export default function Explore() {
+  const queryClient = useQueryClient()
   const router = useRouter()
+  const search = decodeURIComponent(String(router.query.search ?? ''))
   const { data } = useSession()
   const [openDrawerBook, setOpenDrawerBook] = useState<DrawerOpenChangeDetails>(
     { open: false },
   )
-  const [search, setSearch] = useState('')
-  const [page, setPage] = useState(0)
+  const [bookId, setBookId] = useState<string | null>(null)
+  const page = 0
   const [categories, setCategories] = useState<string[]>([])
   const initialized = useRef(false)
+
   const handleOpenChange = (value: DrawerOpenChangeDetails) => {
     setOpenDrawerBook({ open: value.open })
   }
 
-  const { data: booksData } = useQuery({
+  const { register, handleSubmit } = useForm<SchemaForm>({
+    resolver: zodResolver(schemaForm),
+    values: {
+      search: search,
+    },
+  })
+
+  const { data: booksData, isLoading: isLoadingBooksData } = useQuery({
     queryKey: ['get-books', page, categories, search],
     queryFn: async () => await getBooks({ page, categories, search }),
     enabled: router.isReady,
   })
 
-  const { data: categoriesData } = useQuery({
-    queryKey: ['get-categories'],
-    queryFn: async () => await getCategories(),
-    enabled: router.isReady,
-  })
+  const { data: categoriesData, isLoading: isLoadingCategoriesData } = useQuery(
+    {
+      queryKey: ['get-categories'],
+      queryFn: async () => await getCategories(),
+      enabled: router.isReady,
+    },
+  )
 
   function handleCategoriesParams(category: string) {
     if (category === 'all') {
@@ -61,20 +81,49 @@ export default function Explore() {
       return
     }
 
-    let replica: string[] = []
     setCategories((state) => {
       if (state.includes(category)) {
         const filtered = state.filter((item) => item !== category)
-        replica = filtered
+
+        const query = {
+          ...router.query,
+          categories: filtered.join(','),
+        }
+
+        router.push(
+          {
+            pathname: router.pathname,
+            query,
+          },
+          undefined,
+          { shallow: true },
+        )
+
         return filtered
       }
-      replica = [...state, category]
+
+      const query = {
+        ...router.query,
+        categories: [...state, category].join(','),
+      }
+
+      router.push(
+        {
+          pathname: router.pathname,
+          query,
+        },
+        undefined,
+        { shallow: true },
+      )
+
       return [...state, category]
     })
+  }
 
+  function handleSearch(data: SchemaForm) {
     const query = {
       ...router.query,
-      categories: replica.join(','),
+      search: data.search || undefined,
     }
 
     router.push(
@@ -85,6 +134,15 @@ export default function Explore() {
       undefined,
       { shallow: true },
     )
+
+    queryClient.invalidateQueries({
+      queryKey: ['get-books', page, categories, search],
+    })
+  }
+
+  function handleOpenDrawer(bookId: string) {
+    setBookId(bookId)
+    handleOpenChange({ open: true })
   }
 
   useEffect(() => {
@@ -106,7 +164,14 @@ export default function Explore() {
     <>
       <NextSeo title="Explore | BookWise" />
 
-      <DrawerBook open={openDrawerBook.open} onOpenChange={handleOpenChange} />
+      {bookId && (
+        <DrawerBook
+          open={openDrawerBook.open}
+          onOpenChange={handleOpenChange}
+          bookId={bookId}
+          user={data?.user ?? null}
+        />
+      )}
 
       <ExploreContainer>
         <Nav user={data?.user ?? null} />
@@ -115,15 +180,22 @@ export default function Explore() {
             <Heading size="2xl">
               <Binoculars /> Explore
             </Heading>
-            <div className="input-container">
+            <form
+              className="form"
+              onSubmit={handleSubmit(handleSearch)}
+              onBlur={handleSubmit(handleSearch)}
+            >
               <TextInput
                 placeholder="search for book or author"
                 icon={MagnifyingGlass}
+                {...register('search')}
               />
-            </div>
+            </form>
           </Header>
           <Categories>
-            {router.isReady ? (
+            {isLoadingCategoriesData ? (
+              <> CARREGANDO... </>
+            ) : (
               <>
                 <Tag
                   data-checked={categories.length === 0}
@@ -143,33 +215,24 @@ export default function Explore() {
                     </Tag>
                   ))}
               </>
-            ) : (
-              <> CARREGANDO...</>
             )}
           </Categories>
           <Books>
-            {booksData ? (
-              booksData.books.length > 0 ? (
-                booksData.books.map((book) => (
-                  <Book
-                    key={book.id}
-                    book={book}
-                    imageSize="large"
-                    onClick={() => handleOpenChange({ open: true })}
-                  />
-                ))
-              ) : (
-                <>NÃO TEM</>
-              )
+            {isLoadingBooksData ? (
+              <> CARREGANDO... </>
+            ) : booksData && booksData.books.length > 0 ? (
+              booksData.books.map((book) => (
+                <Book
+                  key={book.id}
+                  book={book}
+                  imageSize="large"
+                  onClick={() => handleOpenDrawer(book.id)}
+                />
+              ))
             ) : (
-              <>CARREGANDO...</>
+              <> NÃO TEM </>
             )}
           </Books>
-          {/* <Pagination
-            page={page}
-            onPageChange={(e) => console.log(e)}
-            count={10}
-          /> */}
         </Content>
       </ExploreContainer>
     </>

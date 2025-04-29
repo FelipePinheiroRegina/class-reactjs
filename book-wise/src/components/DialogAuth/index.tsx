@@ -4,8 +4,12 @@ import { Text } from '../Text'
 import googleImage from '@/assets/google-icon.svg'
 import githubImage from '@/assets/github-icon.svg'
 import Image from 'next/image'
+import { signIn } from 'next-auth/react'
 
 export const DialogAuth = () => {
+  async function handleLogGoogle() {
+    await signIn('google')
+  }
   return (
     <Dialog.Root placement="center">
       <Dialog.Trigger asChild>
@@ -21,7 +25,7 @@ export const DialogAuth = () => {
               </Dialog.Title>
             </Dialog.Header>
             <DialogBody>
-              <ButtonAuth as="button" hover="active">
+              <ButtonAuth as="button" hover="active" onClick={handleLogGoogle}>
                 <Image
                   src={googleImage}
                   height={32}

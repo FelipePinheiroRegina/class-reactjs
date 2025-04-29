@@ -27,6 +27,7 @@ export const DrawerBodyStyled = styled(Drawer.Body, {
       display: 'flex',
       flexDirection: 'column',
       gap: 12,
+      paddingBottom: 12,
     },
   },
 })

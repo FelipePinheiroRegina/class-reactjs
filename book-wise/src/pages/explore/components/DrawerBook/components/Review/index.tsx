@@ -2,35 +2,45 @@ import { Avatar } from '@/components/Avatar'
 import { ReviewContainer, Header } from './styles'
 import { Text } from '@/components/Text'
 import { Rating } from '@/components/Rating'
+import { Rating as IRating } from '@prisma/client'
+import { useQuery } from '@tanstack/react-query'
+import { getUserProfileData } from '@/api/get-user-profile-data'
+import dayjs from 'dayjs'
 
-export function Review() {
+interface ReviewProps {
+  props: IRating
+}
+
+export function Review({ props }: ReviewProps) {
+  const { data: userProfileData, isLoading: isLoadingProfileData } = useQuery({
+    queryKey: ['get-user-profile-data', props.user_id],
+    queryFn: async () => await getUserProfileData({ id: props.user_id }),
+    enabled: !!props.user_id,
+  })
+
+  const createdAt = dayjs(new Date(props.created_at)).fromNow()
+
   return (
     <ReviewContainer variant="secondary">
       <Header>
         <div>
           <Avatar
             size="small"
-            src="https://github.com/FelipePinheiroRegina.png"
-            alt="Felipe Pinheiro"
+            src={userProfileData?.image ?? undefined}
+            alt={userProfileData?.name ?? undefined}
           />
           <div>
-            <Text as="strong">Felipe Pinheiro</Text>
+            <Text as="strong">
+              {isLoadingProfileData ? 'Loading...' : userProfileData?.name}
+            </Text>
             <Text as="time" size="sm">
-              2 day ago
+              {createdAt}
             </Text>
           </div>
         </div>
-        <Rating value={4} disabled />
+        <Rating value={props.rate} disabled />
       </Header>
-      <Text size="sm">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione eaque
-        ipsum adipisci quo iusto pariatur accusantium tenetur architecto
-        praesentium corporis animi exercitationem eveniet et, ipsa consequatur
-        fuga optio, cupiditate nam. Lorem ipsum dolor, sit amet consectetur
-        adipisicing elit. Ipsa dolor, voluptas distinctio cumque sed eaque
-        ratione repellendus nostrum, delectus minima maxime. Saepe totam ad
-        accusamus nihil cupiditate esse quidem non!
-      </Text>
+      <Text size="sm">{props.description}</Text>
     </ReviewContainer>
   )
 }

@@ -1,5 +1,6 @@
 import { styled } from '@/styles/stitches.config'
 import { Card } from '@/components/Card'
+import { Text } from '@/components/Text'
 
 export const CommentContainer = styled(Card, {})
 
@@ -14,18 +15,25 @@ export const Header = styled('header', {
     gap: 16,
   },
 
-  marginBottom: 40,
+  marginBottom: 24,
 })
 
 export const Form = styled('form', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 12,
-
   '> div:last-child': {
+    marginTop: 12,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     gap: 8,
+
+    [`${Text}`]: {
+      color: '$green100',
+    },
+
+    '.errors': {
+      [`${Text}`]: {
+        color: '$red500',
+      },
+    },
   },
 })

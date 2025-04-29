@@ -14,6 +14,9 @@ import { Heading } from '@/components/Heading'
 import { Text } from '@/components/Text'
 import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
+import { GetServerSideProps } from 'next'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/pages/api/auth/[...nextauth].api'
 
 export default function Register() {
   const router = useRouter()
@@ -72,4 +75,21 @@ export default function Register() {
       </RegisterContainer>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerSession(context.req, context.res, authOptions)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/home',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

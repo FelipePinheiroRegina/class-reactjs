@@ -29,6 +29,41 @@ entre outros...
 
 # Projetcs
 
+# Book Wise
+
+![Image1](./assets/book-wise/auth.png)
+<hr>
+
+![Image2](./assets/book-wise/home-log.png)
+<hr>
+
+![Image3](./assets/book-wise/home-guest.png)
+<hr>
+
+![Image4](./assets/book-wise/my-profile.png)
+<hr>
+
+![Image5](./assets/book-wise/other-profile.png)
+<hr>
+
+![Image6](./assets/book-wise/explore-guest.png)
+<hr>
+
+![Image6](./assets/book-wise/drawer-guest.png)
+<hr>
+
+![Image7](./assets/book-wise/dialog-auth.png)
+<hr>
+
+![Image8](./assets/book-wise/drawer-log.png)
+<hr>
+
+![Image8](./assets/book-wise/drawer-comment.png)
+<hr>
+
+![Image8](./assets/book-wise/drawer-finish-comment.png)
+<hr>
+
 # Ignite Call
 
 ![Image1](./assets/ignite-call/landing.png)

@@ -32,7 +32,7 @@ export const Header = styled('header', {
     },
   },
 
-  '> .input-container': {
+  '> .form': {
     width: 433,
   },
 })

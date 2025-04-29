@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation'
 import { Avatar } from '../Avatar'
 import { Text } from '../Text'
 import { User } from 'next-auth'
+import { signOut } from 'next-auth/react'
 
 interface NavProps {
   user: User | null
@@ -20,7 +21,6 @@ interface NavProps {
 
 export function Nav({ user }: NavProps) {
   const pathName = usePathname()
-
   return (
     <NavContainer>
       <Image
@@ -51,7 +51,7 @@ export function Nav({ user }: NavProps) {
 
       <Footer>
         {user ? (
-          <Link href="/auth">
+          <Link as="button" onClick={() => signOut()}>
             <Avatar src={user.image} size="small" alt="Felipe Pinheiro" />
             <Text>{user.name}</Text>
             <SignOut color="#F75A68" />
